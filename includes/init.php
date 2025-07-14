@@ -14,12 +14,11 @@ require_once WP_STORE_PLUGIN_DIR . 'includes/meta/product-fields.php';
 // custom field
 require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-warna.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-produk.php';
+require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-variant.php';
 
 add_filter('rwmb_field_types', function ($types) {
   $types[] = 'opsi_warna';
-  return $types;
-});
-add_filter('rwmb_field_types', function ($types) {
   $types[] = 'opsi_produk';
+  $types[] = 'variant';
   return $types;
 });

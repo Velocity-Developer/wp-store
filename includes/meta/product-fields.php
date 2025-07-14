@@ -59,12 +59,14 @@ function wp_store_register_product_meta_boxes($meta_boxes)
       [
         'name' => 'Harga (Rp)',
         'id'   => 'harga',
-        'type' => 'number',
+        'type' => 'text',
+        'class' => 'harga-input',
       ],
       [
         'name' => 'Harga Promo (Rp)',
         'id'   => 'harga_promo',
-        'type' => 'number',
+        'type' => 'text',
+        'class' => 'harga-input',
       ],
       [
         'name' => 'Minimal Order',
@@ -106,8 +108,9 @@ function wp_store_register_product_meta_boxes($meta_boxes)
       [
         'name' => 'Jumlah Stok',
         'id'   => 'stok',
-        'type' => 'number',
-        'desc' => 'Stok akan dikurangi setiap order. Tombol beli akan nonaktif jika stok 0.',
+        'type' => 'text',
+        'class' => 'stok-input',
+        'desc' => 'Stok akan dikurangi setiap order. Tombol beli akan nonaktif jika stok 0.<br>Stok ini akan di abaikan jika produk memiliki opsinya.',
       ],
 
       // === GALERI ===
@@ -125,34 +128,15 @@ function wp_store_register_product_meta_boxes($meta_boxes)
       // === OPSI BASIC ===
       [
         'type' => 'heading',
-        'name' => __('Opsi Basic', 'wp-store'),
+        'name' => __('Opsi', 'wp-store'),
         'desc' => 'Opsi tanpa perubahan harga',
       ],
       [
-        'name' => 'Nama Opsi',
-        'id'   => 'namaopsi',
-        'type' => 'text',
+        'name' => 'Opsi Produk',
+        'id'   => 'opsi',
+        'type' => 'variant',
         'desc' => 'Contoh: "Pilih Warna"',
-      ],
-      [
-        'name'  => 'Daftar Opsi',
-        'id'    => 'opsistandart',
-        'type'  => 'opsi_produk',
-        'clone' => true,
-      ],
-
-      // === OPSI ADVANCE ===
-      [
-        'type' => 'heading',
-        'name' => __('Opsi Advance', 'wp-store'),
-        'desc' => 'Opsi dengan pengaruh harga',
-      ],
-      [
-        'name' => 'Opsi Warna',
-        'id'   => 'opsi_harga',
-        'type' => 'opsi_warna',
-        'desc' => 'Contoh: "Pilih Ukuran"',
-      ],
+      ]
     ],
   ];
 
