@@ -109,7 +109,7 @@ function wp_store_register_product_meta_boxes($meta_boxes)
         'name' => 'Jumlah Stok',
         'id'   => 'stok',
         'type' => 'text',
-        'class' => 'stok-input',
+        'class' => 'harga-input',
         'desc' => 'Stok akan dikurangi setiap order. Tombol beli akan nonaktif jika stok 0.<br>Stok ini akan di abaikan jika produk memiliki opsinya.',
       ],
 

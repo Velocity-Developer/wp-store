@@ -31,7 +31,8 @@ if (!class_exists('RWMB_Variant_Field')) {
                   x-model="item.ukuran"
                   placeholder="Ukuran"
                   style="width: 100px;" />
-                <input type="number"
+                <input type="text"
+                  class="harga-input"
                   :name="'<?php echo esc_attr($field['field_name']); ?>[items][' + variantIndex + '][harga][]'"
                   x-model="item.harga"
                   placeholder="Harga"
@@ -108,7 +109,7 @@ if (!class_exists('RWMB_Variant_Field')) {
           if (trim($ukr) !== '') {
             $variant['items'][] = [
               'ukuran' => sanitize_text_field($ukr),
-              'harga'  => intval($harga[$j] ?? 0),
+              'harga'  => intval(str_replace('.', '', $harga[$j] ?? 0)),
               'stok'   => intval($stok[$j] ?? 0)
             ];
           }
