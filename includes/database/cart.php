@@ -28,8 +28,11 @@ function wp_store_create_cart_tables()
       product_id BIGINT UNSIGNED NOT NULL,
       qty INT UNSIGNED DEFAULT 1,
       opsi VARCHAR(255) DEFAULT NULL,
-      added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (cart_id) REFERENCES {$prefix}store_cart(id) ON DELETE CASCADE
     ) ENGINE=InnoDB $charset;
   ");
 }
+
+register_activation_hook(WP_STORE_PLUGIN_FILE, 'wp_store_create_cart_tables');

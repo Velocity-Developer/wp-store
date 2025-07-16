@@ -87,4 +87,4 @@ function wp_store_create_tables()
   ");
 }
 
-register_activation_hook(__FILE__, 'wp_store_create_tables');
+register_activation_hook(WP_STORE_PLUGIN_FILE, 'wp_store_create_tables');

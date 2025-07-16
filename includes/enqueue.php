@@ -17,9 +17,9 @@ function wp_store_enqueue_scripts()
   // Enqueue script lokal utama
   wp_enqueue_script(
     'wp-store-script', // handle
-    plugin_dir_url(__FILE__) . 'assets/js/wp-store.js',
+    WP_STORE_PLUGIN_URL . 'assets/js/wp-store.js',
     ['alpinejs'], // depend on AlpineJS if needed
-    filemtime(plugin_dir_path(__FILE__) . 'assets/js/wp-store.js'),
+    filemtime(WP_STORE_PLUGIN_DIR . 'assets/js/wp-store.js'),
     true
   );
 

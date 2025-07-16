@@ -4,26 +4,50 @@ if (! defined('ABSPATH')) {
   exit;
 }
 
-// Autoload includes
-require_once WP_STORE_PLUGIN_DIR . 'includes/checks.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/admin/enqueue.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/post-types/product.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/rest/product-endpoints.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/meta/product-fields.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/enqueue.php';
+// 🔹 Daftar file yang akan diload
+$includes = [
+  // Utility & Checks
+  'includes/checks.php',
 
-// Database
-require_once WP_STORE_PLUGIN_DIR . 'includes/database/order.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/database/order-meta.php';
+  // Admin
+  'includes/admin/enqueue.php',
 
-// custom field
-require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-warna.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-produk.php';
-require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-variant.php';
+  // Post Types
+  'includes/post-types/product.php',
 
+  // REST API
+  'includes/rest/product-endpoints.php',
+  'includes/rest/cart/add.php',
+
+  // Shortcodes
+  'includes/shortcodes/cart/add.php',
+
+  // Meta Fields (produk)
+  'includes/meta/product-fields.php',
+
+  // Frontend Assets
+  'includes/enqueue.php',
+
+  // Database Tables
+  'includes/database/order.php',
+  'includes/database/cart.php',
+
+  // Custom Fields
+  'includes/fields/opsi-warna.php',
+  'includes/fields/opsi-produk.php',
+  'includes/fields/opsi-variant.php',
+];
+
+// 🔹 Load semua file
+foreach ($includes as $file) {
+  require_once WP_STORE_PLUGIN_DIR . $file;
+}
+
+// 🔹 Register custom Meta Box field types
 add_filter('rwmb_field_types', function ($types) {
-  $types[] = 'opsi_warna';
-  $types[] = 'opsi_produk';
-  $types[] = 'variant';
-  return $types;
+  return array_merge($types, [
+    'opsi_warna',
+    'opsi_produk',
+    'variant',
+  ]);
 });
