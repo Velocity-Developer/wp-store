@@ -10,6 +10,7 @@ require_once WP_STORE_PLUGIN_DIR . 'includes/admin/enqueue.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/post-types/product.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/rest/product-endpoints.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/meta/product-fields.php';
+require_once WP_STORE_PLUGIN_DIR . 'includes/enqueue.php';
 
 // custom field
 require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-warna.php';
