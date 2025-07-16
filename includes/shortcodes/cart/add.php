@@ -70,8 +70,7 @@ function wp_store_shortcode_add_to_cart($atts)
 
         get opsiText() {
           return this.selectedWarna && this.selectedUkuran ?
-            `Warna: ${this.selectedWarna} | Ukuran: ${this.selectedUkuran}` :
-            '';
+            `Warna: ${this.selectedWarna} | Ukuran: ${this.selectedUkuran}` : '';
         },
 
         addToCart() {
@@ -90,8 +89,12 @@ function wp_store_shortcode_add_to_cart($atts)
             })
             .then(res => res.json())
             .then(data => {
-              if (data.success) this.success = true;
-              else alert(data.message || 'Gagal menambahkan ke keranjang.');
+              if (data.success) {
+                this.success = true;
+                this.updateCartStore(); // 🔁 Update badge
+              } else {
+                alert(data.message || 'Gagal menambahkan ke keranjang.');
+              }
             })
             .catch(err => {
               console.error(err);
@@ -99,6 +102,21 @@ function wp_store_shortcode_add_to_cart($atts)
             })
             .finally(() => {
               this.loading = false;
+            });
+        },
+
+        updateCartStore() {
+          fetch(`${wpStoreData.rest_url}wpstore/v1/cart/get`, {
+              headers: {
+                'X-WP-Nonce': wpStoreData.nonce,
+              }
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                Alpine.store('cart').total_qty = data.data.total_qty;
+                Alpine.store('cart').total_price = data.data.total_price;
+              }
             });
         }
       }

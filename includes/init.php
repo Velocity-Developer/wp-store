@@ -18,9 +18,15 @@ $includes = [
   // REST API
   'includes/rest/product-endpoints.php',
   'includes/rest/cart/add.php',
+  'includes/rest/cart/get.php',
+
+  // Helper
+  'includes/helper/rest.php',
+  'includes/helper/store.php',
 
   // Shortcodes
   'includes/shortcodes/cart/add.php',
+  'includes/shortcodes/cart/badge.php',
 
   // Meta Fields (produk)
   'includes/meta/product-fields.php',
