@@ -14,16 +14,25 @@ function wp_store_enqueue_scripts()
     );
   }
 
-  // Enqueue script lokal utama
+  // Enqueue cart-add.js SELALU
   wp_enqueue_script(
-    'wp-store-script', // handle
+    'cart-add',
+    WP_STORE_PLUGIN_URL . 'assets/js/cart-add.js',
+    ['alpinejs'],
+    filemtime(WP_STORE_PLUGIN_DIR . 'assets/js/cart-add.js'),
+    true
+  );
+
+  // Enqueue script utama (yang mengandung x-data)
+  wp_enqueue_script(
+    'wp-store-script',
     WP_STORE_PLUGIN_URL . 'assets/js/wp-store.js',
-    ['alpinejs'], // depend on AlpineJS if needed
+    ['alpinejs'],
     filemtime(WP_STORE_PLUGIN_DIR . 'assets/js/wp-store.js'),
     true
   );
 
-  // Localize REST data
+  // Localize data
   wp_localize_script('wp-store-script', 'wpStoreData', [
     'nonce'    => wp_create_nonce('wp_rest'),
     'rest_url' => esc_url_raw(rest_url()),
