@@ -12,6 +12,10 @@ require_once WP_STORE_PLUGIN_DIR . 'includes/rest/product-endpoints.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/meta/product-fields.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/enqueue.php';
 
+// Database
+require_once WP_STORE_PLUGIN_DIR . 'includes/database/order.php';
+require_once WP_STORE_PLUGIN_DIR . 'includes/database/order-meta.php';
+
 // custom field
 require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-warna.php';
 require_once WP_STORE_PLUGIN_DIR . 'includes/fields/opsi-produk.php';
