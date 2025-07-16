@@ -25,7 +25,7 @@ function wp_store_register_product_post_type()
     'menu_icon'           => 'dashicons-cart',
     'has_archive'         => true,
     'show_in_rest'        => true,
-    'rewrite'             => ['slug' => 'produk'],
+    // 'rewrite'             => ['slug' => 'produk'],
     'supports'            => ['title', 'editor', 'thumbnail'],
     'taxonomies'          => ['category', 'post_tag'],
     'capability_type'     => 'post',

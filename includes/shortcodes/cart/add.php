@@ -1,5 +1,4 @@
 <?php
-
 add_shortcode('wp_store_add_to_cart', 'wp_store_shortcode_add_to_cart');
 
 function wp_store_shortcode_add_to_cart($atts)
@@ -11,16 +10,12 @@ function wp_store_shortcode_add_to_cart($atts)
 
   $product_id = (int) $atts['product_id'];
   $variants   = get_post_meta($product_id, 'opsi', true);
-  $has_variant = is_array($variants) && count($variants) > 0;
-
-  // Kirim ke JS sebagai JSON
-  wp_add_inline_script('wp-store-script', 'window.wpStoreVariants = ' . json_encode($variants ?: []) . ';', 'before');
+  $encoded    = esc_attr(json_encode($variants ?: []));
 
   ob_start(); ?>
-
-  <?php $encoded = esc_attr(json_encode($variants ?: [])); ?>
-  <div x-data="addToCartWithVariant(<?= esc_attr($product_id) ?>, <?= $encoded ?>)">
-    <template x-if="variants.length">
+  <div x-data="addToCartWithVariant(<?php echo esc_attr($product_id) ?>, <?php echo $encoded ?>)">
+    <pre x-text="JSON.stringify(variants, null, 2)"></pre>
+    <template x-if="showVariants">
       <div class="mb-3">
         <label>Warna</label>
         <select x-model="selectedWarna" class="form-select mb-2">
@@ -48,7 +43,7 @@ function wp_store_shortcode_add_to_cart($atts)
       @click="addToCart"
       x-text="loading ? 'Menambahkan...' : '<?php echo esc_js($atts['label']) ?>'"
       class="btn btn-primary"
-      :disabled="loading || success || (variants.length && (!selectedWarna || !selectedUkuran))"></button>
+      :disabled="loading || success || (showVariants && (!selectedWarna || !selectedUkuran))"></button>
 
     <template x-if="success">
       <span class="text-success ms-2">✓ Ditambahkan!</span>
@@ -62,17 +57,17 @@ function wp_store_shortcode_add_to_cart($atts)
         selectedUkuran: '',
         loading: false,
         success: false,
-
         get filteredSizes() {
           const selected = this.variants.find(v => v.label === this.selectedWarna);
           return selected ? selected.items : [];
         },
-
         get opsiText() {
           return this.selectedWarna && this.selectedUkuran ?
             `Warna: ${this.selectedWarna} | Ukuran: ${this.selectedUkuran}` : '';
         },
-
+        get showVariants() {
+          return this.variants.length > 1;
+        },
         addToCart() {
           this.loading = true;
           fetch(`${wpStoreData.rest_url}wpstore/v1/cart/add`, {
@@ -91,7 +86,7 @@ function wp_store_shortcode_add_to_cart($atts)
             .then(data => {
               if (data.success) {
                 this.success = true;
-                this.updateCartStore(); // 🔁 Update badge
+                this.updateCartStore();
               } else {
                 alert(data.message || 'Gagal menambahkan ke keranjang.');
               }
@@ -104,7 +99,6 @@ function wp_store_shortcode_add_to_cart($atts)
               this.loading = false;
             });
         },
-
         updateCartStore() {
           fetch(`${wpStoreData.rest_url}wpstore/v1/cart/get`, {
               headers: {
@@ -122,5 +116,6 @@ function wp_store_shortcode_add_to_cart($atts)
       }
     }
   </script>
-<?php return ob_get_clean();
+<?php
+  return ob_get_clean();
 }

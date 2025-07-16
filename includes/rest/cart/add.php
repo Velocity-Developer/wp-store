@@ -14,7 +14,8 @@ function wp_store_rest_cart_add($request)
 
   $product_id = intval($request->get_param('product_id'));
   $qty        = max(1, intval($request->get_param('qty')));
-  $opsi       = sanitize_text_field($request->get_param('opsi'));
+  $opsi_raw   = $request->get_param('opsi');
+  $opsi       = is_null($opsi_raw) ? '' : sanitize_text_field($opsi_raw);
 
   if (! $product_id) {
     return new WP_Error('missing_product', 'Produk tidak valid.', ['status' => 400]);
