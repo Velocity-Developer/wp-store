@@ -3,6 +3,14 @@ add_action('wp_enqueue_scripts', 'wp_store_enqueue_scripts');
 
 function wp_store_enqueue_scripts()
 {
+  // Enqueue CSS
+  wp_enqueue_style(
+    'wp-store-style',
+    WP_STORE_PLUGIN_URL . 'assets/css/wp-store.css',
+    [],
+    filemtime(WP_STORE_PLUGIN_DIR . 'assets/css/wp-store.css')
+  );
+
   // Enqueue AlpineJS jika belum ada
   if (!wp_script_is('alpinejs', 'enqueued')) {
     wp_enqueue_script(
